@@ -21,10 +21,6 @@ class Connect:
         self.cur.execute(query)
         self.conn.commit()
 
-    def write_users_to_data(self, passwd):
-        self.cur.execute("""INSERT INTO "Users" ("Username", "Password") VALUES ('emily.murphy', %s)""", [passwd])
-        self.conn.commit()
-
     def __enter__(self):
         return self
 

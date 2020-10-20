@@ -5,6 +5,7 @@ import bcrypt
 
 
 def get_table_names():
+    # Get table names to be inserted into dropdown menus
     name_list = []
     query_string = """SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'public'"""
     with Connect() as temp_conn:
@@ -17,6 +18,7 @@ def get_table_names():
 
 
 class FrameSwitcher(tk.Tk):
+    # In charge of showing frame user requests
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
@@ -45,6 +47,7 @@ class LoginPage(tk.Frame):
         self.controller = controller
 
         def check_credentials(user_name, user_pswd):
+            # Function to ensure entered login details matches one in the database
             error_label['text'] = ""
             query_string = f'''SELECT * FROM "Users" WHERE "Username" = '{user_name}';'''
             with Connect() as conn:
@@ -150,6 +153,7 @@ class EnterData(tk.Frame):
         self.controller = controller
 
         def update_col_names(*args):
+            # Function to dynamically create entry fields dependent on dropdown choice
             for widget in frame_form.winfo_children():
                 widget.destroy()
             update_query = f"""SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table_choice.get()}'"""
@@ -166,6 +170,7 @@ class EnterData(tk.Frame):
                 j.pack()
 
         def submit_data():
+            # Function to submit the entered data to database table selected in dropdown
             column_names_list = []
             data_submit_list = []
             for widget in frame_form.winfo_children():
